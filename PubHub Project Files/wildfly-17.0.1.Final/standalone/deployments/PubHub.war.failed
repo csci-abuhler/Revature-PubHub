@@ -1,0 +1,2 @@
+"{\"WFLYCTL0080: Failed services\" => {\"jboss.deployment.unit.\\\"PubHub.war\\\".undertow-deployment.UndertowDeploymentInfoService\" => \"java.lang.ClassNotFoundException: examples.pubhub.servlets.PublishBookServlet from [Module \\\"deployment.PubHub.war\\\" from Service Module Loader]
+    Caused by: java.lang.ClassNotFoundException: examples.pubhub.servlets.PublishBookServlet from [Module \\\"deployment.PubHub.war\\\" from Service Module Loader]\"}}"

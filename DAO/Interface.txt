@@ -1,0 +1,12 @@
+package examples.pubhub.dao;
+
+import java.util.List;
+
+import examples.pubhub.model.Book;
+
+public interface TagDAO {
+	public List<Book> addTag(String tagName, String isbn);
+	public List<Book> removeTag(String tagName, String isbn);
+	public List<Book> getTagsByISBN(String isbn);
+	public List<Book> getBooksByTag(String tagName);
+}
