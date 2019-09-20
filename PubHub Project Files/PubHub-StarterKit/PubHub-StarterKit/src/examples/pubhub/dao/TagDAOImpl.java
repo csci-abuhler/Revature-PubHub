@@ -22,8 +22,10 @@ public class TagDAOImpl implements TagDAO {
 
 	public static void main(String[] args) {
 		TagDAOImpl tag = new TagDAOImpl();
-		tag.removeTag("test", "1111111111111");
+		List<String> tags = new ArrayList<>();
+		tags = tag.getTagsByISBN("1111111111111");
 		// 1111111111111
+		System.out.println(tags);
 	} // main
 
 	@Override
@@ -43,6 +45,8 @@ public class TagDAOImpl implements TagDAO {
 			} // try catch
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			closeResources();
 		} // try catch
 	} // addTag
 
@@ -62,19 +66,59 @@ public class TagDAOImpl implements TagDAO {
 			} // try catch
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			closeResources();
 		} // try catch
 	} // remove tag
 
 	@Override
-	public List<Book> getTagsByISBN(String isbn) {
-		List<Book> tags = new ArrayList<>();
+	public List<String> getTagsByISBN(String isbn) {
+		List<String> tags = new ArrayList<>();
+		
+		try {
+			connection = DAOUtilities.getConnection();
+
+			String sql = "select tag_name from book_tags where isbn_13 = \'" + isbn + "\'";
+
+			stmt = connection.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				tags.add(rs.getString("tag_name"));
+			} // while
+			
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeResources();
+		} // try catch
 		
 		return tags;
-	}
+	} // getTagsByISBN
 
 	@Override
 	public List<Book> getBooksByTag(String tagName) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	} // getBooksByTag
+	
+	private void closeResources() {
+		try {
+			if (stmt != null)
+				stmt.close();
+		} catch (SQLException e) {
+			System.out.println("Could not close statement!");
+			e.printStackTrace();
+		} // try catch
+		
+		try {
+			if (connection != null)
+				connection.close();
+		} catch (SQLException e) {
+			System.out.println("Could not close connection!");
+			e.printStackTrace();
+		} // try catch
+	} // closeResources
 } // class
