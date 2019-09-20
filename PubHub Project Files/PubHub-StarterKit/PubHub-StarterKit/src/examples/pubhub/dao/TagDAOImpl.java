@@ -67,8 +67,9 @@ public class TagDAOImpl implements TagDAO {
 
 	@Override
 	public List<Book> getTagsByISBN(String isbn) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Book> tags = new ArrayList<>();
+		
+		return tags;
 	}
 
 	@Override
