@@ -34,18 +34,12 @@ public class TagDAOImpl implements TagDAO {
 		try {
 			connection = DAOUtilities.getConnection();
 
-			String sql = "insert into book_tags (\"isbn_13\", \"tag_name\") values (\'" + isbn + "\',\'" + tagName
-					+ "\')";
+			String sql = "insert into book_tags (\"isbn_13\", \"tag_name\") values (\'" + isbn + "\',\'" + tagName + "\')";
 
 			stmt = connection.prepareStatement(sql);
-
-			try {
-				stmt.executeQuery();
-			} catch (Exception e) {
-				System.out.println("Duplicate entry!");
-			} // try catch
+			stmt.executeQuery();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Duplicate entry!");
 		} finally {
 			closeResources();
 		} // try catch
