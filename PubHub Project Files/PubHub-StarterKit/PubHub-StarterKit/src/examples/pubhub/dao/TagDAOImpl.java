@@ -22,10 +22,11 @@ public class TagDAOImpl implements TagDAO {
 
 	public static void main(String[] args) {
 		TagDAOImpl tag = new TagDAOImpl();
-		List<String> tags = new ArrayList<>();
-		tags = tag.getTagsByISBN("1111111111111");
+		//List<String> tags = new ArrayList<>();
+		//tags = tag.getTagsByISBN("1111111111111");
 		// 1111111111111
-		System.out.println(tags);
+		//System.out.println(tags);
+		tag.removeTag("test", "1");
 	} // main
 
 	@Override
@@ -54,18 +55,13 @@ public class TagDAOImpl implements TagDAO {
 	public void removeTag(String tagName, String isbn) {
 		try {
 			connection = DAOUtilities.getConnection();
-
+			
 			String sql = "delete from book_tags where book_tags.isbn_13=\'" + isbn + "\' and book_tags.tag_name=\'" + tagName + "\'";
-
+			
 			stmt = connection.prepareStatement(sql);
-
-			try {
-				stmt.executeQuery();
-			} catch (Exception e) {
-				System.out.println("No entry found!");
-			} // try catch
+			stmt.executeQuery();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("No entry found!");
 		} finally {
 			closeResources();
 		} // try catch
